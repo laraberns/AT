@@ -7,17 +7,17 @@ namespace AT.Pages
     public class ClienteDetailsModel : PageModel
     {
 
-        private static List<Cliente> clientes = new List<Cliente>
+        private static List<AT.Models.Cliente> clientes = new List<AT.Models.Cliente>
         {
-            new Cliente { Id = 1, Nome = "Laura", Email = "laura@gmail.com" },
-            new Cliente { Id = 2, Nome = "Geraldo", Email = "geraldo@gmail.com" },
-            new Cliente { Id = 3, Nome = "Felipe", Email = "felipe@gmail.com" }
+            new AT.Models.Cliente { Id = 1, Nome = "Laura", Email = "laura@gmail.com" },
+            new AT.Models.Cliente { Id = 2, Nome = "Geraldo", Email = "geraldo@gmail.com" },
+            new AT.Models.Cliente { Id = 3, Nome = "Felipe", Email = "felipe@gmail.com" }
         };
 
         [BindProperty(SupportsGet = true)]
         public int Id { get; set; }
 
-        public Cliente Cliente { get; set; }
+        public AT.Models.Cliente Cliente { get; set; }
 
         public IActionResult OnGet(int id)
         {

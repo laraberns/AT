@@ -8,7 +8,7 @@ namespace AT.Pages
     public class CreateDestinoModel : PageModel
     {
         [BindProperty]
-        public Destino Destino { get; set; }
+        public AT.Models.Destino Destino { get; set; }
 
         public IActionResult OnPost()
         {

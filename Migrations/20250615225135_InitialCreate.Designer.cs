@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AT.Migrations
 {
     [DbContext(typeof(ATContext))]
-    [Migration("20250615220605_InitialCreate")]
+    [Migration("20250615225135_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -50,18 +50,28 @@ namespace AT.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PacoteTuristicoId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Pais")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PacoteTuristicoId");
-
                     b.ToTable("Destinos");
+                });
+
+            modelBuilder.Entity("AT.Models.PacoteDestino", b =>
+                {
+                    b.Property<int>("PacoteTuristicoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DestinoId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("PacoteTuristicoId", "DestinoId");
+
+                    b.HasIndex("DestinoId");
+
+                    b.ToTable("PacoteDestinos");
                 });
 
             modelBuilder.Entity("AT.Models.PacoteTuristico", b =>
@@ -75,9 +85,6 @@ namespace AT.Migrations
 
                     b.Property<DateTime>("DataInicio")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("NumeroReservas")
-                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Preco")
                         .HasColumnType("TEXT");
@@ -108,18 +115,31 @@ namespace AT.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
-
                     b.HasIndex("PacoteTuristicoId");
+
+                    b.HasIndex("ClienteId", "PacoteTuristicoId", "DataReserva")
+                        .IsUnique();
 
                     b.ToTable("Reservas");
                 });
 
-            modelBuilder.Entity("AT.Models.Destino", b =>
+            modelBuilder.Entity("AT.Models.PacoteDestino", b =>
                 {
-                    b.HasOne("AT.Models.PacoteTuristico", null)
-                        .WithMany("Destinos")
-                        .HasForeignKey("PacoteTuristicoId");
+                    b.HasOne("AT.Models.Destino", "Destino")
+                        .WithMany("PacoteDestinos")
+                        .HasForeignKey("DestinoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AT.Models.PacoteTuristico", "PacoteTuristico")
+                        .WithMany("PacoteDestinos")
+                        .HasForeignKey("PacoteTuristicoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Destino");
+
+                    b.Navigation("PacoteTuristico");
                 });
 
             modelBuilder.Entity("AT.Models.Reserva", b =>
@@ -131,7 +151,7 @@ namespace AT.Migrations
                         .IsRequired();
 
                     b.HasOne("AT.Models.PacoteTuristico", "PacoteTuristico")
-                        .WithMany()
+                        .WithMany("Reservas")
                         .HasForeignKey("PacoteTuristicoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -146,9 +166,16 @@ namespace AT.Migrations
                     b.Navigation("Reservas");
                 });
 
+            modelBuilder.Entity("AT.Models.Destino", b =>
+                {
+                    b.Navigation("PacoteDestinos");
+                });
+
             modelBuilder.Entity("AT.Models.PacoteTuristico", b =>
                 {
-                    b.Navigation("Destinos");
+                    b.Navigation("PacoteDestinos");
+
+                    b.Navigation("Reservas");
                 });
 #pragma warning restore 612, 618
         }

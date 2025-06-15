@@ -1,0 +1,42 @@
+﻿@page
+@model AT.Pages.PacoteDestino.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PacoteDestino[0].PacoteTuristico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PacoteDestino[0].Destino)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.PacoteDestino) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PacoteTuristico.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destino.Nome)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

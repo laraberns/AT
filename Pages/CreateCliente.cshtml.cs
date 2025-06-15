@@ -7,7 +7,7 @@ namespace AT.Pages
     public class CreateClienteModel : PageModel
     {
         [BindProperty]
-        public Cliente Cliente { get; set; }
+        public AT.Models.Cliente Cliente { get; set; }
 
         public IActionResult OnPost()
         {

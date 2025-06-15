@@ -26,6 +26,20 @@ namespace AT.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Destinos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nome = table.Column<string>(type: "TEXT", nullable: false),
+                    Pais = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Destinos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PacotesTuristicos",
                 columns: table => new
                 {
@@ -34,8 +48,7 @@ namespace AT.Migrations
                     Titulo = table.Column<string>(type: "TEXT", nullable: false),
                     DataInicio = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CapacidadeMaxima = table.Column<int>(type: "INTEGER", nullable: false),
-                    Preco = table.Column<decimal>(type: "TEXT", nullable: false),
-                    NumeroReservas = table.Column<int>(type: "INTEGER", nullable: false)
+                    Preco = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,23 +56,27 @@ namespace AT.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Destinos",
+                name: "PacoteDestinos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    Pais = table.Column<string>(type: "TEXT", nullable: false),
-                    PacoteTuristicoId = table.Column<int>(type: "INTEGER", nullable: true)
+                    PacoteTuristicoId = table.Column<int>(type: "INTEGER", nullable: false),
+                    DestinoId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Destinos", x => x.Id);
+                    table.PrimaryKey("PK_PacoteDestinos", x => new { x.PacoteTuristicoId, x.DestinoId });
                     table.ForeignKey(
-                        name: "FK_Destinos_PacotesTuristicos_PacoteTuristicoId",
+                        name: "FK_PacoteDestinos_Destinos_DestinoId",
+                        column: x => x.DestinoId,
+                        principalTable: "Destinos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PacoteDestinos_PacotesTuristicos_PacoteTuristicoId",
                         column: x => x.PacoteTuristicoId,
                         principalTable: "PacotesTuristicos",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,14 +107,15 @@ namespace AT.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Destinos_PacoteTuristicoId",
-                table: "Destinos",
-                column: "PacoteTuristicoId");
+                name: "IX_PacoteDestinos_DestinoId",
+                table: "PacoteDestinos",
+                column: "DestinoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservas_ClienteId",
+                name: "IX_Reservas_ClienteId_PacoteTuristicoId_DataReserva",
                 table: "Reservas",
-                column: "ClienteId");
+                columns: new[] { "ClienteId", "PacoteTuristicoId", "DataReserva" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservas_PacoteTuristicoId",
@@ -109,10 +127,13 @@ namespace AT.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Destinos");
+                name: "PacoteDestinos");
 
             migrationBuilder.DropTable(
                 name: "Reservas");
+
+            migrationBuilder.DropTable(
+                name: "Destinos");
 
             migrationBuilder.DropTable(
                 name: "Clientes");

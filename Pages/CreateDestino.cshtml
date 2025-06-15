@@ -1,0 +1,34 @@
+﻿@page
+@model AT.Pages.CreateDestinoModel
+@{
+	ViewData["Title"] = "Cadastrar Destino";
+}
+
+<h2>Cadastrar Destino</h2>
+
+<form method="post">
+	<div class="form-group">
+		<label>Nome da Cidade:</label>
+		<input asp-for="Destino.Nome" class="form-control" />
+		<span asp-validation-for="Destino.Nome" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+		<label>País:</label>
+		<input asp-for="Destino.Pais" class="form-control" />
+		<span asp-validation-for="Destino.Pais" class="text-danger"></span>
+	</div>
+
+	<button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>
+
+@if (TempData["MensagemSucesso"] != null)
+{
+	<div class="alert alert-success mt-3">
+		@TempData["MensagemSucesso"]
+	</div>
+}
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

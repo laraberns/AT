@@ -1,0 +1,26 @@
+﻿@page
+@model AT.Pages.ReservaCalculatorModel
+@{
+	ViewData["Title"] = "Calcular Reserva";
+}
+
+<h2>Calcular Valor Total da Reserva</h2>
+
+<form method="post">
+	<div>
+		<label>Número de Diárias:</label>
+		<input asp-for="NumeroDiarias" />
+	</div>
+	<div>
+		<label>Valor da Diária:</label>
+		<input asp-for="ValorDiaria" />
+	</div>
+	<div>
+		<button type="submit">Calcular</button>
+	</div>
+</form>
+
+@if (Model.ValorTotal > 0)
+{
+	<h3>Valor Total da Reserva: R$ @Model.ValorTotal</h3>
+}

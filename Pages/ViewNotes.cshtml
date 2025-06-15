@@ -1,0 +1,29 @@
+﻿@page
+@model ViewNotesModel
+
+<h1>Sistema de Notas</h1>
+
+<form method="post">
+    <input type="text" name="FileName" placeholder="Nome do arquivo" required />
+    <textarea name="Content" placeholder="Digite sua nota..." required></textarea>
+    <button type="submit">Salvar</button>
+</form>
+
+<h2>Notas Salvas:</h2>
+<ul>
+    @foreach (var file in Model.NotesFiles)
+    {
+        <li>
+            <a href="?file=@file.Name">@file.Name</a>
+            <small>(@file.LastWriteTime.ToString("g"))</small>
+        </li>
+    }
+</ul>
+
+@if (!string.IsNullOrEmpty(Model.SelectedFileContent))
+{
+    <div class="note-content">
+        <h3>@Model.SelectedFileName</h3>
+        <pre>@Model.SelectedFileContent</pre>
+    </div>
+}

@@ -49,6 +49,8 @@ namespace AT.Data
             modelBuilder.Entity<Reserva>()
                 .HasIndex(r => new { r.ClienteId, r.PacoteTuristicoId, r.DataReserva })
                 .IsUnique();
+
+            modelBuilder.Entity<Cliente>().HasQueryFilter(c => !c.IsDeleted);
         }
     }
 }

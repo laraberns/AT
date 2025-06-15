@@ -52,12 +52,10 @@ namespace AT.Pages.Cliente
             var cliente = await _context.Clientes.FindAsync(id);
             if (cliente != null)
             {
-                Cliente = cliente;
-                _context.Clientes.Remove(Cliente);
+                cliente.IsDeleted = true;
                 await _context.SaveChangesAsync();
             }
-
-            return RedirectToPage("./Index");
+            return RedirectToPage("Index");
         }
     }
 }

@@ -27,5 +27,8 @@ namespace AT.Models
         public string Email { get; set; }
 
         public List<Reserva> Reservas { get; set; }
+
+        // Exercicio 12a
+        public bool IsDeleted { get; set; }
     }
 }

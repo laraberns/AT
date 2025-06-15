@@ -1,0 +1,20 @@
+﻿@page "{id:int}"
+@model AT.Pages.ClienteDetailsModel
+@{
+    ViewData["Title"] = "Detalhes do Cliente";
+}
+
+<h2>Detalhes do Cliente</h2>
+
+@if (Model.Cliente == null)
+{
+    <p>Cliente não encontrado.</p>
+}
+else
+{
+    <div>
+        <p><strong>Id:</strong> @Model.Cliente.Id</p>
+        <p><strong>Nome:</strong> @Model.Cliente.Nome</p>
+        <p><strong>Email:</strong> @Model.Cliente.Email</p>
+    </div>
+}

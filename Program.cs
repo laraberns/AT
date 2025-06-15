@@ -18,6 +18,14 @@ namespace AT
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+            builder.Services.AddAuthentication("MinhaCookieAuth")
+    .AddCookie("MinhaCookieAuth", options =>
+    {
+        options.LoginPath = "/Login";
+    });
+
+            builder.Services.AddAuthorization();
+
 
             var app = builder.Build();
 
@@ -38,6 +46,7 @@ namespace AT
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapRazorPages();

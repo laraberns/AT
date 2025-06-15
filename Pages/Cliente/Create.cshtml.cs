@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using AT.Data;
 using AT.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AT.Pages.Cliente
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly AT.Data.ATContext _context;

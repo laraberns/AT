@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AT.Data;
 using AT.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AT.Pages.PacoteDestino
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly AT.Data.ATContext _context;
